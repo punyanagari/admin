@@ -1164,6 +1164,7 @@ $(".confirm-dns").confirm({
         dialogClass: "modal-dialog modal-mg" // Bootstrap classes for mid-size modal
 });
 
+
 $(".confirm-pihole").confirm({
         text: "Are you sure you want to change Pihole Mode?",
         title: "Confirmation required",
@@ -1346,3 +1347,12 @@ $(document).ready(function(){
         alInfo.delay(3000).fadeOut(2000, function() { alInfo.hide(); });
     }
 });
+
+
+var $select1 = $( '#select1' ),
+		$select2 = $( '#select2' ),
+    $options = $select2.find( 'option' );
+    
+$select1.on( 'change', function() {
+	$select2.html( $options.filter( '[value="' + this.value + '"]' ) );
+} ).trigger( 'change' );

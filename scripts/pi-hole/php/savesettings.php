@@ -275,6 +275,13 @@ function readAdlists()
                                 }
                                 break;
 
+                        case "changeDefault":
+				if ( isset( $_POST['submit'] ) ) {
+				$protocol =$_POST["select1"];
+				$country = $_POST["select2"];
+				$success .= "Default settings changed $protocol $country";
+				}
+                                break;
 
 			default:
 				// Option not found

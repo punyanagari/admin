@@ -115,6 +115,11 @@ if (isset($arahasya["DEFAULT_COUNTRY"])) {
 }
 if (isset($arahasya["PROTOCOL"])) {
     $protocol = $arahasya["PROTOCOL"];
+    if("$protocol" == "OpenVPN"){
+        $protocolStatus=true;
+    }else{
+        $protocolStatus=false;
+    }
 } else {
     $protocol = "unknown";
 }
@@ -221,8 +226,8 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                 <li<?php if($tab === "changepassword"){ ?> class="active"<?php } ?>><a data-toggle="tab" href="#changepassword">Change Password</a></li>
             </ul>
             <div class="tab-content"
-	<!-- ######################################################### Change Password ######################################################### -->
-                <div id="changepassword" class="tab-pane fade<?php if($tab === "changepassword"){ ?> in active<?php } ?>">
+ 	<!-- ######################################################### Change Password ######################################################### -->
+		 <div id="server" class="tab-pane fade<?php if($tab === "server"){ ?> in active<?php } ?>">
                     <div class="row">
                         <div class="col-md-6">
                             <form role="form" method="post">
@@ -268,6 +273,53 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                         </div>
                     </div>
                 </div>
+	<!-- ######################################################### Change Password ######################################################### -->
+                <div id="changepassword" class="tab-pane fade<?php if($tab === "changepassword"){ ?> in active<?php } ?>">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form role="form" method="post">
+                                <div class="box box-warning">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title"Change Web Admin Password</h3>
+                                    </div>
+                                    <div class="box-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h4>Enter current password:</h4>
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <input type="password" class="form-control" name="currentpassword"
+                                                               value="<?php echo $currentpassword; ?>">
+                                                    </div>
+                                                </div>
+                                                <h4>Enter new password:</h4>
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <input type="password" class="form-control" name="password"
+                                                               value="<?php echo $password; ?>">
+                                                    </div>
+                                                </div>
+                                                <h4>Confirm new password:</h4>
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <input type="password" class="form-control" name="confirm"
+                                                               value="<?php echo $confirm; ?>">
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" name="currenthash" value="<?php echo $currenthash ?>">
+                                                <input type="hidden" name="field" value="changePassword">
+                                                <input type="hidden" name="token" value="<?php echo $token ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="box-footer clearfix">
+                                        <button type="submit" class="btn btn-primary pull-right" name="submit">Save</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
         <!-- ######################################################### Settings ######################################################### -->
                 <div id="settings" class="tab-pane fade<?php if($tab === "settings"){ ?> in active<?php } ?>">
@@ -292,17 +344,6 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                                                         </label>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <th scope="row">Default Country:</th>
-                                                    <td><?php echo htmlentities($defaultCountry); ?></td><td>
-
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">Current Protocol:</th>
-                                                    <td><?php echo htmlentities($protocol); ?></td><td>
-                                                    </td>
-                                                </tr>
                                                  <tr>
                                                     <th scope="row">DNS-Crypt:</th>
                                                     <td><?php echo htmlentities($dnsCrypt); ?></td><td>
@@ -322,7 +363,40 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                                                                 <span class="slider round"></span>
                                                         </label>
                                                     </td>
+                                                </tr><form role="form" method="post">
+						<tr>
+                                                    <th scope="row">Default Protocol:</th>
+                                                    <td><?php echo htmlentities($protocol); ?></td><td>
+                                                        <div>
+                                                                <select class="form-control" name="select1" id="select1">
+								<option selected disabled>--Select Protocol--</option>
+                                                                <option value="1">OpenVPN</option>
+                                                                <option value="2">Wireguard</option>
+                                                                </select>
+                                                        </div>
+                                                    </td>
                                                 </tr>
+                                                <tr>
+                                                    <th scope="row">Default Country:</th>
+                                                    <td><?php echo htmlentities($defaultCountry); ?></td><td>
+                                                        <div>
+                                                                <select class="form-control" name="select2" id="select2">
+                                                                <option value="1" selected disabled>Select Country</option>
+								<option value="1">Italy</option>
+                                                                <option value="1">France</option>
+                                                                <option value="1">US</option>
+								<option value="2" selected disabled>Select Country</option>
+                                                                <option value="2">Germany</option>
+                                                                <option value="2">Singapore</option>
+                                                                </select>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+								<input type="hidden" name="field" value="changeDefault"/>
+                                                                <input type="hidden" name="token" value="<?php echo $token ?>">
+						<tr><th><td><td>
+							<button type="submit" class="btn btn-primary pull-right" name="submit" value="save">Save</button>
+						</td></td></th></tr></form>
                                                 </tbody>
                                             </table>
                                         </div>
