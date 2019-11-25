@@ -248,7 +248,6 @@ function readAdlists()
 
 
 			case "changePassword":
-                                if ( isset( $_POST['submit'] ) ) {
                                         $currentpassword = $_POST["currentpassword"];
                                         $password = $_POST["password"];
                                         $confirm = $_POST["confirm"];
@@ -272,17 +271,20 @@ function readAdlists()
                                         else{
                                                 $error .= "Password cannot be blank!";
                                         }
-                                }
+
                                 break;
 
                         case "changeDefault":
-				if ( isset( $_POST['submit'] ) ) {
-				$protocol =$_POST["select1"];
-				$country = $_POST["select2"];
-				$success .= "Default settings changed $protocol $country";
+
+				$protocol =explode('|', $_POST['select1']);
+				$country =explode('|', $_POST['select2']);
+				if($protocol[0] != ""){
+					$success .= "Default settings changed...";
+				}
+				else{
+					$error .= "Please select the protocol and the country...";
 				}
                                 break;
-
 			default:
 				// Option not found
 				$debug = true;
@@ -321,3 +323,5 @@ function readAdlists()
 		return $bytes;
 	}
 ?>
+
+

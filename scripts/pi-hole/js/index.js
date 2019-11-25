@@ -1164,7 +1164,6 @@ $(".confirm-dns").confirm({
         dialogClass: "modal-dialog modal-mg" // Bootstrap classes for mid-size modal
 });
 
-
 $(".confirm-pihole").confirm({
         text: "Are you sure you want to change Pihole Mode?",
         title: "Confirmation required",
@@ -1238,6 +1237,8 @@ $("#DHCPchk").click(function() {
 	$("input.DHCPgroup").prop("disabled", !this.checked);
 	$("#dhcpnotice").prop("hidden", !this.checked).addClass("lookatme");
 });
+
+
 
 function loadCacheInfo()
 {
@@ -1354,5 +1355,7 @@ var $select1 = $( '#select1' ),
     $options = $select2.find( 'option' );
     
 $select1.on( 'change', function() {
-	$select2.html( $options.filter( '[value="' + this.value + '"]' ) );
+ $select2.html( $options.filter( '[value^="' + (this.value).split("|")[0] + '"]' ) );
 } ).trigger( 'change' );
+
+

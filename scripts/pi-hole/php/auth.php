@@ -94,7 +94,7 @@ function check_csrf($token) {
     }
 
     if(!isset($_SESSION['token'])) {
-        log_and_die("Session expired! Please re-login on the Pi-hole dashboard.");
+        log_and_die("Session expired! Please re-login on the Arahasya dashboard.");
     }
 
     if(empty($token)) {
@@ -102,7 +102,7 @@ function check_csrf($token) {
     }
 
     if(!hash_equals($_SESSION['token'], $token)) {
-        log_and_die("Wrong token! Please re-login on the Pi-hole dashboard.");
+        log_and_die("Wrong token! Please login again on the Arahasya Dashboard..");
     }
 }
 

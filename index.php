@@ -37,12 +37,12 @@
         }
     }
 
+// Handling of PHP internal errors
 $last_error = error_get_last();
 if($last_error["type"] === E_WARNING || $last_error["type"] === E_ERROR)
 {
 	$error .= "There was a problem applying your settings.<br>Debugging information:<br>PHP error (".htmlspecialchars($last_error["type"])."): ".htmlspecialchars($last_error["message"])." in ".htmlspecialchars($last_error["file"]).":".htmlspecialchars($last_error["line"]);
 }
-
 ?>
 <style type="text/css">
 	.tooltip-inner {
@@ -86,6 +86,7 @@ if (isset($_POST["submit"])) {
         <?php echo $error; ?>
     </div>
 <?php } ?>
+
 
 
 <?php
@@ -266,7 +267,7 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                                         </div>
                                     </div>
                                     <div class="box-footer clearfix">
-                                        <button type="submit" class="btn btn-primary pull-righ" name="submit">Save</button>
+                                        <button type="submit" class="btn btn-primary pull-righ" name="submit">Change</button>
                                     </div>
                                 </div>
                             </form>
@@ -307,13 +308,12 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                                                     </div>
                                                 </div>
                                                 <input type="hidden" name="currenthash" value="<?php echo $currenthash ?>">
-                                                <input type="hidden" name="field" value="changePassword">
                                                 <input type="hidden" name="token" value="<?php echo $token ?>">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="box-footer clearfix">
-                                        <button type="submit" class="btn btn-primary pull-right" name="submit">Save</button>
+                                        <button type="submit" class="btn btn-primary pull-right" name="field" value="changePassword">Save</button>
                                     </div>
                                 </div>
                             </form>
@@ -370,8 +370,8 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                                                         <div>
                                                                 <select class="form-control" name="select1" id="select1">
 								<option selected disabled>--Select Protocol--</option>
-                                                                <option value="1">OpenVPN</option>
-                                                                <option value="2">Wireguard</option>
+                                                                <option value="1|ovpn">OpenVPN</option>
+                                                                <option value="2|wg">Wireguard</option>
                                                                 </select>
                                                         </div>
                                                     </td>
@@ -382,20 +382,76 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                                                         <div>
                                                                 <select class="form-control" name="select2" id="select2">
                                                                 <option value="1" selected disabled>Select Country</option>
-								<option value="1">Italy</option>
-                                                                <option value="1">France</option>
-                                                                <option value="1">US</option>
+								<option value="1|in">India</option>
+								<option value="1|au">Australia</option>
+                                                                <option value="1|us">United States</option>
+                                                                <option value="1|uk">United Kingdom</option>
+								<option value="1|fr">France</option>
+                                                                <option value="1|de">Germany</option>
+                                                                <option value="1|ar">Argentina</option>
+                                                                <option value="1|at">Austria</option>
+								<option value="1|be">Belgium</option>
+                                                                <option value="1|ba">Bosnia & Herzegovina</option>
+                                                                <option value="1|br">Brazil</option>
+                                                                <option value="1|bg">Bulgaria</option>
+                                                                <option value="1|ca">Canada</option>
+                                                                <option value="1|cl">Chile</option>
+                                                                <option value="1|cr">Costa Rica</option>
+                                                                <option value="1|hr">Croatia</option>
+								<option value="1|cy">Cyprus</option>
+                                                                <option value="1|cz">Czech Republic</option>
+                                                                <option value="1|dk">Denmark</option>
+                                                                <option value="1|ee">Estonia</option>
+                                                                <option value="1|fi">Finland</option>
+                                                                <option value="1|ge">Georgia</option>
+                                                                <option value="1|gr">Greece</option>
+                                                                <option value="1|hk">Hong Kong</option>
+								<option value="1|hu">Hungary</option>
+                                                                <option value="1|is">Iceland</option>
+                                                                <option value="1|id">Indonesia</option>
+                                                                <option value="1|ie">Ireland</option>
+                                                                <option value="1|il">Israel</option>
+                                                                <option value="1|it">Italy</option>
+                                                                <option value="1|jp">Japan</option>
+                                                                <option value="1|lv">Latvia</option>
+								<option value="1|lu">Luxembourg</option>
+                                                                <option value="1|my">Malaysia</option>
+                                                                <option value="1|mx">Mexico</option>
+                                                                <option value="1|md">Moldova</option>
+                                                                <option value="1|nl">Netherland</option>
+                                                                <option value="1|nz">New Zealand</option>
+                                                                <option value="1|ar">North Macedoania</option>
+                                                                <option value="1|no">Norway</option>
+                                                                <option value="1|pl">Poland</option>
+                                                                <option value="1|pt">Portugal</option>
+                                                                <option value="1|ro">Romania</option>
+                                                                <option value="1|rs">Serbia</option>
+                                                                <option value="1|za">South Africa</option>
+                                                                <option value="1|sk">South Korea</option>
+                                                                <option value="1|es">Spain</option>
+                                                                <option value="1|se">Sweden</option>
+                                                                <option value="1|ch">Switzerland</option>
+                                                                <option value="1|tw">Taiwan</option>
+                                                                <option value="1|th">Thailand</option>
+                                                                <option value="1|tr">Turkey</option>
+                                                                <option value="1|ua">Ukraine</option>
+                                                                <option value="1|ae">United Arab Emirates</option>
+                                                                <option value="1|v">Vietnam</option>
 								<option value="2" selected disabled>Select Country</option>
-                                                                <option value="2">Germany</option>
-                                                                <option value="2">Singapore</option>
+                                                                <option value="2|au">Australia</option>
+                                                                <option value="2|sg">Singapore</option>
+								<option value="2|jp">Japan</option>
+								<option value="2|uk">United Kingdom</option>
+                                                                <option value="2|us">United States</option>
+                                                                <option value="2|jp">Japan</option>
                                                                 </select>
                                                         </div>
                                                     </td>
                                                 </tr>
-								<input type="hidden" name="field" value="changeDefault"/>
                                                                 <input type="hidden" name="token" value="<?php echo $token ?>">
+
 						<tr><th><td><td>
-							<button type="submit" class="btn btn-primary pull-right" name="submit" value="save">Save</button>
+							<button type="submit" class="btn btn-primary pull-right" name="field" value="changeDefault">Save</button>
 						</td></td></th></tr></form>
                                                 </tbody>
                                             </table>
@@ -459,12 +515,14 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
     </div>
 </div>
 
+<script src="scripts/vendor/jquery.confirm.min.js"></script>
+<script src="scripts/pi-hole/js/index.js"></script>
 <?php } ?>
 
 
-<script src="scripts/vendor/jquery.confirm.min.js"></script>
-<script src="scripts/pi-hole/js/index.js"></script>
 
 <?php
     require "scripts/pi-hole/php/footer.php";
 ?>
+
+
