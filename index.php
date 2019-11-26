@@ -134,12 +134,12 @@ if (isset($arahasya["DNS_CRYPT"])) {
 } else {
     $dnsCrypt = "unknown";
 }
-if (isset($arahasya["PIHOLE"])) {
-    $pihole = $arahasya["PIHOLE"];
-if("$pihole" == "Enabled"){
-        $piholeStatus=true;
+if (isset($setupVars["BLOCKING_ENABLED"])) {
+    $pihole = $setupVars["BLOCKING_ENABLED"];
+    if($pihole){
+        $piholeStatus="Enabled";
     }else{
-        $piholeStatus=false;
+        $piholeStatus="Disabled";
     }
 } else {
     $pihole = "unknown";
@@ -356,9 +356,9 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                                                 </tr>
                                                  <tr>
                                                     <th scope="row">Pihole:</th>
-                                                    <td><?php echo htmlentities($pihole); ?></td><td>
+                                                    <td><?php echo htmlentities($piholeStatus); ?></td><td>
                                                         <label class="switch">
-                                                                <input class ="confirm-pihole form-control" type="checkbox" name="active" id="piholeCheck" <?php if ($piholeStatus){ ?>checked<?php }
+                                                                <input class ="confirm-pihole form-control" type="checkbox" name="active" id="piholeCheck" <?php if ($pihole){ ?>checked<?php }
                                                                       ?>>
                                                                 <span class="slider round"></span>
                                                         </label>
