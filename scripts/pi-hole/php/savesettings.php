@@ -211,23 +211,22 @@ function readAdlists()
 	if(isset($_POST["field"]))
 	{
 		// Handle CSRF
-		check_csrf(isset($_POST["token"]) ? $_POST["token"] : "");
 
 		// Process request
 		switch ($_POST["field"]) {
 			 case "vpnmode":
-                                exec("sudo pihole -a vpnmode");
+                                exec("sudo pihole -a changevpnmode");
                                 $success = "Changed VPN Mode!";
                                 break;
 
                         case "dnscrypt":
-                                exec("sudo pihole -a dnscryptmode");
+                                exec("sudo pihole -a changednsmode");
                                 $success = "Changed DNS-Crypt Mode!";
                                 break;
 
 
                         case "piholemode":
-                                exec("sudo pihole -a piholemode");
+                                exec("sudo pihole -a changepiholemode");
                                 $success = "Changed Pihole Mode!";
                                 break;
 
@@ -279,6 +278,7 @@ function readAdlists()
 				$protocol =explode('|', $_POST['select1']);
 				$country =explode('|', $_POST['select2']);
 				if($protocol[0] != ""){
+					exec("sudo pihole -a changedefaults \"".$protocol[1]."\" ".$country[2]);
 					$success .= "Default settings changed...";
 				}
 				else{

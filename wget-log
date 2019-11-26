@@ -1,0 +1,37 @@
+Retrying.
+
+--2019-11-25 18:24:40--  (try: 8)  https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn-release_1.0.0_all.deb
+Connecting to repo.nordvpn.com (repo.nordvpn.com)|104.17.50.74|:443... failed: Connection timed out.
+Connecting to repo.nordvpn.com (repo.nordvpn.com)|104.17.49.74|:443... failed: Connection timed out.
+Retrying.
+
+--2019-11-25 18:29:13--  (try: 9)  https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn-release_1.0.0_all.deb
+Connecting to repo.nordvpn.com (repo.nordvpn.com)|104.17.50.74|:443... failed: Connection timed out.
+Connecting to repo.nordvpn.com (repo.nordvpn.com)|104.17.49.74|:443... failed: Connection timed out.
+Retrying.
+
+--2019-11-25 18:33:45--  (try:10)  https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn-release_1.0.0_all.deb
+Connecting to repo.nordvpn.com (repo.nordvpn.com)|104.17.50.74|:443... failed: Connection timed out.
+Connecting to repo.nordvpn.com (repo.nordvpn.com)|104.17.49.74|:443... failed: Connection timed out.
+Retrying.
+
+--2019-11-25 18:38:17--  (try:11)  https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn-release_1.0.0_all.deb
+Connecting to repo.nordvpn.com (repo.nordvpn.com)|104.17.50.74|:443... failed: Connection timed out.
+Connecting to repo.nordvpn.com (repo.nordvpn.com)|104.17.49.74|:443... failed: Connection timed out.
+Retrying.
+
+--2019-11-25 18:42:54--  (try:12)  https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn-release_1.0.0_all.deb
+Connecting to repo.nordvpn.com (repo.nordvpn.com)|104.17.50.74|:443... failed: Connection timed out.
+Connecting to repo.nordvpn.com (repo.nordvpn.com)|104.17.49.74|:443... failed: Connection timed out.
+Retrying.
+
+--2019-11-25 18:47:30--  (try:13)  https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn-release_1.0.0_all.deb
+Connecting to repo.nordvpn.com (repo.nordvpn.com)|104.17.50.74|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 5056 (4.9K) [application/octet-stream]
+Saving to: 'nordvpn-release_1.0.0_all.deb'
+
+     0K ....                                                  100% 5.76M=0.001s
+
+2019-11-25 18:47:31 (5.76 MB/s) - 'nordvpn-release_1.0.0_all.deb' saved [5056/5056]
+
