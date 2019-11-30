@@ -226,72 +226,26 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                 <li<?php if($tab === "settings"){ ?> class="active"<?php } ?>><a data-toggle="tab" href="#settings">Settings</a></li>
                 <li<?php if($tab === "changepassword"){ ?> class="active"<?php } ?>><a data-toggle="tab" href="#changepassword">Change Password</a></li>
             </ul>
-            <div class="tab-content"
- 	<!-- ######################################################### Change Password ######################################################### -->
-		 <div id="changepassword" class="tab-pane fade<?php if($tab === "changepassword"){ ?> in active<?php } ?>">
+            <div class="tab-content">
+ 	<!-- ######################################################### Server  ######################################################### -->
+		 <div id="server" class="tab-pane fade<?php if($tab === "server"){ ?> in active<?php } ?>">
                     <div class="row">
-                        <div class="col-md-6">
-                            <form role="form" method="post">
-                                <div class="box box-warning">
-                                    <div class="box-header with-border">
-                                        <h3 class="box-title"Change Web Admin Password</h3>
-                                    </div>
-                                    <div class="box-body">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <h4>Enter current password:</h4>
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <input type="password" class="form-control" name="currentpassword"
-                                                               value="<?php echo $currentpassword; ?>">
-                                                    </div>
-                                                </div>
-                                                <h4>Enter new password:</h4>
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <input type="password" class="form-control" name="password"
-                                                               value="<?php echo $password; ?>">
-                                                    </div>
-                                                </div>
-                                                <h4>Confirm new password:</h4>
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <input type="password" class="form-control" name="confirm"
-                                                               value="<?php echo $confirm; ?>">
-                                                    </div>
-                                                </div>
-                                                <input type="hidden" name="currenthash" value="<?php echo $currenthash ?>">
-                                                <input type="hidden" name="field" value="changePassword">
-                                                <input type="hidden" name="token" value="<?php echo $token ?>">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="box-footer clearfix">
-                                        <button type="submit" class="btn btn-primary pull-righ" name="submit">Change</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-	<!-- ######################################################### Server ######################################################### -->
-                <div id="server" class="tab-pane fade<?php if($tab === "server"){ ?> in active<?php } ?>">
-<div class="row">
                         <div class="col-md-6">
                             <div class="box">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">VPN Server</h3>
+                                    <h3 class="box-title">Chnage Server Location</h3>
                                 </div>
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <table class="table table-striped table-bordered dt-responsive nowrap">
                                                 <tbody>
-						<tr>
+						<form role="form" method="post">
+                                                <tr>
                                                     <th scope="row">Select Protocol:</th>
                                                     <td>
                                                         <div>
-                                                                <select class="form-control" name="select3" id="select3">
+                                                                <select class="form-control" name="select1" id="select1">
 								<option selected disabled>--Select Protocol--</option>
                                                                 <option value="1|OpenVPN">OpenVPN</option>
                                                                 <option value="2|Wireguard">Wireguard</option>
@@ -303,7 +257,7 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                                                     <th scope="row">Select Country:</th>
                                                     <td>
                                                         <div>
-                                                                <select class="form-control" name="select4" id="select4">
+                                                                <select class="form-control" name="select2" id="select2">
                                                                 <option value="1" selected disabled>Select Country</option>
 								<option value="1|in|India">India</option>
 								<option value="1|au|Australia">Australia</option>
@@ -388,9 +342,56 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                                     </div>
                                 </div>
                           </div>
+		       </div>
+		   </div>
+		</div>
+	<!-- ######################################################### Change Password ######################################################### -->
+                <div id="changepassword" class="tab-pane fade<?php if($tab === "changepassword"){ ?> in active<?php } ?>">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form role="form" method="post">
+                                <div class="box box-warning">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title"Change Web Admin Password</h3>
+                                    </div>
+                                    <div class="box-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h4>Enter current password:</h4>
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <input type="password" class="form-control" name="currentpassword"
+                                                               value="<?php echo $currentpassword; ?>">
+                                                    </div>
+                                                </div>
+                                                <h4>Enter new password:</h4>
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <input type="password" class="form-control" name="password"
+                                                               value="<?php echo $password; ?>">
+                                                    </div>
+                                                </div>
+                                                <h4>Confirm new password:</h4>
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <input type="password" class="form-control" name="confirm"
+                                                               value="<?php echo $confirm; ?>">
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" name="currenthash" value="<?php echo $currenthash ?>">
+                                                <input type="hidden" name="token" value="<?php echo $token ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="box-footer clearfix">
+                                        <button type="submit" class="btn btn-primary pull-right" name="field" value="changePassword">Save</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
+                    </div>
                 </div>
-</div>
+
         <!-- ######################################################### Settings ######################################################### -->
                 <div id="settings" class="tab-pane fade<?php if($tab === "settings"){ ?> in active<?php } ?>">
                     <div class="row">

@@ -1353,9 +1353,15 @@ $(document).ready(function(){
 var $select1 = $( '#select1' ),
 		$select2 = $( '#select2' ),
     $options = $select2.find( 'option' );
-    
+
 $select1.on( 'change', function() {
  $select2.html( $options.filter( '[value^="' + (this.value).split("|")[0] + '"]' ) );
 } ).trigger( 'change' );
 
+var $select3 = $( '#select3' ),
+                $select4 = $( '#select4' ),
+    $options1 = $select4.find( 'option' );
 
+$select3.on( 'change', function() {
+ $select4.html( $options1.filter( '[value^="' + (this.value).split("|")[0] + '"]' ) );
+} ).trigger( 'change' );

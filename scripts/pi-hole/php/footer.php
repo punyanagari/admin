@@ -47,7 +47,7 @@
 ?>
     <!-- /.content-wrapper -->
     <footer class="main-footer">
-        <div style="display: inline-block"><strong><a href="https://www.arahasya.com" target="_blank"><i class="fa fa-heart"></i> Arahasya </a></strong>by Partronics eBoards Private Ltd</div>
+        <div style="display: inline-block"><strong><a href="https://www.arahasya.com" target="_blank"><i class="fa fa-heart"></i> Arahasya </a></strong>by & Partronics eBoards Private Ltd</div>
     </footer>
 </div>
 <!-- ./wrapper -->

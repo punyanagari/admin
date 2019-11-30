@@ -268,74 +268,137 @@ function readAdlists()
                                                 }
                                         }
                                         else{
-                                                $error .= "Password cannot be blank!";
-                                        }
-
-                                break;
-
-                        case "changeDefault":
-
-				$protocol1 =explode('|', $_POST['select1']);
-				$country1 =explode('|', $_POST['select2']);
-				if($protocol1[0] != ""){
-					exec("sudo pihole -a changedefaults \"".$protocol1[1]."\" ".$country1[2]);
-					$success .= "Default settings changed...";
-				}
-				else{
-					$error .= "Please select the protocol and the country...";
-				}
-                                break;
-
-                        case "changeServer":
-
-                                $protocol =explode('|', $_POST['select3']);
-                                $country =explode('|', $_POST['select4']);
-                                if($protocol[0] != ""){
-                                        exec("sudo pihole -a changeserver \"".$protocol[1]."\" ".$country[2]);
-                                        $success .= "Connecting to $country[2]...";
-                                }
-                                else{
-                                        $error .= "Please select the protocol and the country...";
-                                }
-                                break;
-
-			default:
-				// Option not found
-				$debug = true;
-				break;
-		}
-	}
-
-	// Credit: http://stackoverflow.com/a/5501447/2087442
-	function formatSizeUnits($bytes)
+ 
+	$list = [];
+	$handle = @fopen("/etc/pihole/dns-servers.conf", "r");
+	if ($handle)
 	{
-		if ($bytes >= 1073741824)
+		while (($line = fgets($handle)) !== false)
 		{
-			$bytes = number_format($bytes / 1073741824, 2) . ' GB';
+			$line = rtrim($line);
+			$line = explode(';', $line);
+			$name = $line[0];
+			$values = [];
+			if (!empty($line[1])) {
+				$values["v4_1"] = $line[1];
+			}
+			if (!empty($line[2])) {
+				$values["v4_2"] = $line[2];
+			}
+			if (!empty($line[3])) {
+				$values["v6_1"] = $line[3];
+			}
+			if (!empty($line[4])) {
+				$values["v6_2"] = $line[4];
+			}
+            $list[$name] = $values;
 		}
-		elseif ($bytes >= 1048576)
-		{
-			$bytes = number_format($bytes / 1048576, 2) . ' MB';
-		}
-		elseif ($bytes >= 1024)
-		{
-			$bytes = number_format($bytes / 1024, 2) . ' kB';
-		}
-		elseif ($bytes > 1)
-		{
-			$bytes = $bytes . ' bytes';
-		}
-		elseif ($bytes == 1)
-		{
-			$bytes = $bytes . ' byte';
-		}
-		else
-		{
-			$bytes = '0 bytes';
-		}
-
-		return $bytes;
+		fclose($handle);
 	}
-?>
+	return $list;
+}
+
+$adlist = [];
+function readAdlists()
+{
+	// Reset list
+	$list = [];
+	$handle = @fopen("/etc/pihole/adlists.list", "r");
+	if ($handle)
+	{
+		while (($line = fgets($handle)) !== false)
+		{
+			if(strlen($line) < 3)
+			{
+				continue;
+			}
+			elseif($line[0] === "#")
+			{
+				// Comments start either with "##" or "# "
+				if($line[1] !== "#" &&
+				   $line[1] !== " ")
+				{
+					// Commented list
+					array_push($list, [false,rtrim(substr($line, 1))]);
+				}
+			}
+			else
+			{
+				// Active list
+				array_push($list, [true,rtrim($line)]);
+			}
+		}
+		fclose($handle);
+	}
+	return $list;
+}
+
+	// Read available adlists
+	$adlist = readAdlists();
+	// Read available DNS server list
+	$DNSserverslist = readDNSserversList();
+
+	$error = "";
+	$success = "";
+
+	if(isset($_POST["field"]))
+	{
+		// Handle CSRF
+
+		// Process request
+		switch ($_POST["field"]) {
+			 case "vpnmode":
+                                exec("sudo pihole -a changevpnmode");
+                                $success = "Changed VPN Mode!";
+                                break;
+
+                        case "dnscrypt":
+                                exec("sudo pihole -a changednsmode");
+                                $success = "Changed DNS-Crypt Mode!";
+                                break;
 
 
+                        case "piholemode":
+                                exec("sudo pihole -a changepiholemode");
+                                $success = "Changed Pihole Mode!";
+                                break;
+
+			case "poweroff":
+				exec("sudo pihole -a poweroff");
+				$success = "The system will poweroff in 5 seconds...";
+				break;
+
+			case "reboot":
+				exec("sudo pihole -a reboot");
+				$success = "The system will reboot in 5 seconds...";
+				break;
+
+			case "restartdns":
+				exec("sudo pihole -a restartdns");
+				$success = "The DNS server has been restarted";
+				break;
+
+
+			case "changePassword":
+                                        $currentpassword = $_POST["currentpassword"];
+                                        $password = $_POST["password"];
+                                        $confirm = $_POST["confirm"];
+                                        if("$currentpassword" != "" && "$password" != "" && "$confirm" != ""){
+                                                $hash = hash('sha256', $currentpassword);
+                                                $hash1 = hash('sha256', $hash);
+                                                $currenthash = $_POST["currenthash"];
+                                                if("$hash1" == "$currenthash"){
+                                                        if("$password" == "$confirm" && "$hash1" == "$currenthash"){
+                                                                exec("sudo pihole -a -p ".$password);
+                                                                $success .= "The password has been changed successfully!";
+                                                        }
+                                                        else{
+                                                                $error .= "Password does not match!";
+                                                        }
+                                                }
+                                                else{
+                                                        $error .= "Please enter correct password!";
+                                                }
+                                        }
+                                        else{
+ 

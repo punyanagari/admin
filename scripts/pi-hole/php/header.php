@@ -250,7 +250,7 @@ if($auth) {
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini">P<b>h</b></span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg">A<b>rahasya</b></span>
+            <span class="logo-lg">J<b>atayu</b></span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -264,7 +264,7 @@ if($auth) {
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                             <img src="img/logo.svg" class="user-image" style="border-radius: initial" sizes="160x160" alt="Pi-hole logo" />
-                            <span class="hidden-xs">Pi-hole</span>
+                            <span class="hidden-xs">Arahasya</span>
                         </a>
                         <ul class="dropdown-menu" style="right:0">
                             <!-- User image -->
