@@ -278,11 +278,11 @@ function readAdlists()
 				$protocol1 =explode('|', $_POST['select1']);
 				$country1 =explode('|', $_POST['select2']);
 				if($protocol1[0] != ""){
-					exec("sudo pihole -a changedefaults \"".$protocol1[1]."\" ".$country1[2]);
+					exec("sudo pihole -a changedefaults \"".$protocol1[1]."\" "."\"$country1[2]\"");
 					$success .= "Default settings changed...";
 				}
 				else{
-					$error .= "Please select the protocol and the country...";
+					$error .= "Please select the protocol and the country....";
 				}
                                 break;
 
@@ -291,7 +291,7 @@ function readAdlists()
                                 $protocol =explode('|', $_POST['select3']);
                                 $country =explode('|', $_POST['select4']);
                                 if($protocol[0] != ""){
-                                        exec("sudo pihole -a changeserver \"".$protocol[1]."\" ".$country[2]);
+                                        exec("sudo pihole -a changeserver \"".$protocol[1]."\" ".$country[1]);
                                         $success .= "Connecting to $country[2]...";
                                 }
                                 else{

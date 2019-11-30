@@ -276,7 +276,7 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                 </div>
 	<!-- ######################################################### Server ######################################################### -->
                 <div id="server" class="tab-pane fade<?php if($tab === "server"){ ?> in active<?php } ?>">
-<div class="row">
+		    <div class="row">
                         <div class="col-md-6">
                             <div class="box">
                                 <div class="box-header with-border">
@@ -287,6 +287,7 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                                         <div class="col-md-12">
                                             <table class="table table-striped table-bordered dt-responsive nowrap">
                                                 <tbody>
+						<form role="form" method="post">
 						<tr>
                                                     <th scope="row">Select Protocol:</th>
                                                     <td>
@@ -314,7 +315,7 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                                                                 <option value="1|ar|Argentina">Argentina</option>
                                                                 <option value="1|at|Austria">Austria</option>
 								<option value="1|be|Belgium">Belgium</option>
-                                                                <option value="1|ba|Bosnia & Herzegovina">Bosnia & Herzegovina</option>
+                                                                <option value="1|ba|Bosnia and Herzegovina">Bosnia & Herzegovina</option>
                                                                 <option value="1|br|Brazil">Brazil</option>
                                                                 <option value="1|bg|Bulgaria">Bulgaria</option>
                                                                 <option value="1|ca|Canada">Canada</option>
@@ -461,7 +462,7 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                                                                 <option value="1|ar|Argentina">Argentina</option>
                                                                 <option value="1|at|Austria">Austria</option>
 								<option value="1|be|Belgium">Belgium</option>
-                                                                <option value="1|ba|Bosnia & Herzegovina">Bosnia & Herzegovina</option>
+                                                                <option value="1|ba|Bosnia and Herzegovina">Bosnia & Herzegovina</option>
                                                                 <option value="1|br|Brazil">Brazil</option>
                                                                 <option value="1|bg|Bulgaria">Bulgaria</option>
                                                                 <option value="1|ca|Canada">Canada</option>
