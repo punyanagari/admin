@@ -11,7 +11,7 @@
     require_once("scripts/pi-hole/php/gravity.php");
 
    $setupVars = parse_ini_file("/etc/pihole/setupVars.conf");
-   $arahasya = parse_ini_file("/etc/pihole/arahasya.conf");
+   $arahasya = parse_ini_file("/opt/pihole/arahasya/arahasya.conf");
 
 
    if(is_readable($piholeFTLConfFile))
