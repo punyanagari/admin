@@ -364,7 +364,7 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                                                                 <option value="1|vn|Vietnam">Vietnam</option>
 								<option value="2" selected disabled>Select Country</option>
                                                                 <option value="2|au|Australia">Australia</option>
-								<option value="2|at|Austria">Australia</option>
+								<option value="2|at|Austria">Austria</option>
                                                                 <option value="2|ca|Canada">Canada</option>
                                                                 <option value="2|fr|France">France</option>
                                                                 <option value="2|de|Germany">Germany</option>
