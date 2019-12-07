@@ -279,7 +279,7 @@ function readAdlists()
                                         if("$nordmail" != "" && "$nordpass" != ""){
                                                 $hash = hash('sha256', $nordpass);
                                                 $hash1 = hash('sha256', $hash);
-                                                exec("sudo pihole -a changenord \"".$nordmail."\" "."\"$hash1\"");
+                                                exec("sudo pihole -a changenord \"".$nordmail."\" "."\'$nordpass\'");
                                                 $success .= "NordVPN details  have been changed successfully!";
                                         }
                                         else{
