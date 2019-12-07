@@ -98,6 +98,11 @@ if (isset($setupVars["WEBPASSWORD"])) {
 } else {
     $currenthash = "unknown";
 }
+if (isset($arahasya["NORD_PASS"])) {
+    $nordhash = $setupVars["NORD_PASS"];
+} else {
+    $nordhash = "unknown";
+}
 
 if (isset($arahasya["VPN_MODE"])) {
     $vpnMode = $arahasya["VPN_MODE"];
@@ -212,7 +217,7 @@ if (isset($setupVars["BLOCKING_ENABLED"])) {
   if($auth){ ?>
 
 <?php
-if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "changepassword"))) {
+if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "changedetails"))) {
     $tab = $_GET['tab'];
 } else {
     $tab = "server";
@@ -224,56 +229,120 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
             <ul class="nav nav-tabs">
                 <li<?php if($tab === "server"){ ?> class="active"<?php } ?>><a data-toggle="tab" href="#server">Server</a></li>
                 <li<?php if($tab === "settings"){ ?> class="active"<?php } ?>><a data-toggle="tab" href="#settings">Settings</a></li>
-                <li<?php if($tab === "changepassword"){ ?> class="active"<?php } ?>><a data-toggle="tab" href="#changepassword">Change Password</a></li>
+                <li<?php if($tab === "changedetails"){ ?> class="active"<?php } ?>><a data-toggle="tab" href="#changedetails">Change Details</a></li>
             </ul>
             <div class="tab-content"
  	<!-- ######################################################### Change Password ######################################################### -->
-		 <div id="changepassword" class="tab-pane fade<?php if($tab === "changepassword"){ ?> in active<?php } ?>">
-                    <div class="row">
+		 <div id="changedetails" class="tab-pane fade<?php if($tab === "changedetails"){ ?> in active<?php } ?>">
+		    <div class="row">
                         <div class="col-md-6">
-                            <form role="form" method="post">
-                                <div class="box box-warning">
-                                    <div class="box-header with-border">
-                                        <h3 class="box-title"Change Web Admin Password</h3>
-                                    </div>
-                                    <div class="box-body">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <h4>Enter current password:</h4>
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <input type="password" class="form-control" name="currentpassword"
-                                                               value="<?php echo $currentpassword; ?>">
-                                                    </div>
-                                                </div>
-                                                <h4>Enter new password:</h4>
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <input type="password" class="form-control" name="password"
-                                                               value="<?php echo $password; ?>">
-                                                    </div>
-                                                </div>
-                                                <h4>Confirm new password:</h4>
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <input type="password" class="form-control" name="confirm"
-                                                               value="<?php echo $confirm; ?>">
-                                                    </div>
-                                                </div>
-                                                <input type="hidden" name="currenthash" value="<?php echo $currenthash ?>">
-                                                <input type="hidden" name="field" value="changePassword">
-                                                <input type="hidden" name="token" value="<?php echo $token ?>">
-                                            </div>
+                            <div class="box">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Change NordVPN Login Details in the System:</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table class="table table-striped table-bordered dt-responsive nowrap">
+                                                <tbody>
+							<form role="form" method="post">
+
+                                                        <tr>
+                                                        <th scope="row">Enter Email:</th>
+                                                        <td>
+                                                           <div class="form-group">
+                                                                <div class="input-group">
+                                                                        <input type="email" class="form-control" name="nordmail"
+                                                                        value="<?php echo $nordmail; ?>">
+                                                                </div>
+                                                           </div>
+                                                        </td>
+                                                    </tr>
+                                                        <tr>
+                                                        <th scope="row">Enter Password:</th>
+                                                        <td>
+                                                           <div class="form-group">
+                                                                <div class="input-group">
+                                                                        <input type="password" class="form-control" name="nordpass"
+                                                                        value="<?php echo $nordpass; ?>">
+                                                                </div>
+                                                           </div>
+                                                        </td>
+                                                    </tr>
+                                                         <input type="hidden" name="field" value="changeNord">
+                                                        <input type="hidden" name="token" value="<?php echo $token ?>">
+
+                                                <tr><td><td>
+                                                        <button type="submit" class="btn btn-primary pull-right">Save</button>
+                                                </td></td></tr></form>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
-                                    <div class="box-footer clearfix">
-                                        <button type="submit" class="btn btn-primary pull-righ" name="submit">Change</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="box">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Change Admin Panel Passowrd:</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <table class="table table-striped table-bordered dt-responsive nowrap">
+                                                <tbody>
+							<form role="form" method="post">
+
+                                                    <tr>
+                                                        <th scope="row">Enter Current Password:</th>
+                                                        <td>
+                                                           <div class="form-group">
+                                                                <div class="input-group">
+                                                                        <input type="password" class="form-control" name="currentpassword"
+                                                                        value="<?php echo $currentpassword; ?>">
+                                                                </div>
+                                                           </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Enter New Password:</th>
+                                                        <td>
+                                                           <div class="form-group">
+                                                                <div class="input-group">
+                                                                        <input type="password" class="form-control" name="password"
+                                                                        value="<?php echo $password; ?>">
+                                                                </div>
+                                                           </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Confirm New Password:</th>
+                                                        <td>
+                                                             <div class="form-group">
+                                                                <div class="input-group">
+                                                                        <input type="password" class="form-control" name="confirm"
+                                                                        value="<?php echo $confirm; ?>">
+                                                                </div>
+                                                           </div>
+                                                        </td>
+                                                    </tr>
+                                                         <input type="hidden" name="currenthash" value="<?php echo $currenthash ?>">
+                                                         <input type="hidden" name="field" value="changePassword">
+                                                        <input type="hidden" name="token" value="<?php echo $token ?>">
+
+                                                <tr><td><td>
+                                                        <button type="submit" class="btn btn-primary pull-right">Save</button>
+                                                </td></td></tr></form>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
-                </div>
+</div>
 	<!-- ######################################################### Server ######################################################### -->
                 <div id="server" class="tab-pane fade<?php if($tab === "server"){ ?> in active<?php } ?>">
 		    <div class="row">
@@ -434,7 +503,8 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                                                                 <span class="slider round"></span>
                                                         </label>
                                                     </td>
-                                                </tr><form role="form" method="post">
+                                                </tr>
+						<form role="form" method="post">
 						<tr>
                                                     <th scope="row">Default Protocol:</th>
                                                     <td><?php echo htmlentities($protocol); ?></td><td>
@@ -537,6 +607,8 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                                 </div>
                           </div>
                         </div>
+
+
                     <div class="row"> 
                         <div class="col-md-12">
                             <div class="box box-warning">

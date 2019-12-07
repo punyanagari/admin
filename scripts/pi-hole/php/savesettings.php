@@ -273,6 +273,21 @@ function readAdlists()
 
                                 break;
 
+				 case "changeNord":
+                                        $nordpass = $_POST["nordpass"];
+                                        $nordmail = $_POST["nordmail"];
+                                        if("$nordmail" != "" && "$nordpass" != ""){
+                                                $hash = hash('sha256', $nordpass);
+                                                $hash1 = hash('sha256', $hash);
+                                                exec("sudo pihole -a changenord \"".$nordmail."\" "."\"$hash1\"");
+                                                $success .= "NordVPN details  have been changed successfully!";
+                                        }
+                                        else{
+                                                $error .= "Details cannot be blank!";
+                                        }
+
+                                break;
+
                         case "changeDefault":
 
 				$protocol1 =explode('|', $_POST['select1']);
