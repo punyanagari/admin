@@ -87,7 +87,21 @@ if (isset($_POST["submit"])) {
     </div>
 <?php } ?>
 
+<?php
+function is_connected()
+{
+    $connected = @fsockopen("www.google.com", 80); 
+                                        //website, port  (try 80 or 443)
+    if ($connected){
+        $is_conn = "Yes"; //action when connected
+        fclose($connected);
+    }else{
+        $is_conn = "No"; //action in connection failure
+    }
+    return $is_conn;
 
+}
+?>
 
 <?php
 
@@ -98,12 +112,6 @@ if (isset($setupVars["WEBPASSWORD"])) {
 } else {
     $currenthash = "unknown";
 }
-if (isset($arahasya["NORD_PASS"])) {
-    $nordhash = $setupVars["NORD_PASS"];
-} else {
-    $nordhash = "unknown";
-}
-
 if (isset($arahasya["VPN_MODE"])) {
     $vpnMode = $arahasya["VPN_MODE"];
     if("$vpnMode" == "Enabled"){
@@ -150,6 +158,48 @@ if (isset($setupVars["BLOCKING_ENABLED"])) {
     $pihole = "unknown";
 }
 
+if (isset($arahasya["STATUS"])) {
+    $statusNord = $arahasya["STATUS"];
+} else {
+    $statusNord = "unknown";
+}
+if (isset($arahasya["SERVER"])) {
+    $serverNord = $arahasya["SERVER"];
+} else {
+    $serverNord = "unknown";
+}
+if (isset($arahasya["COUNTRY"])) {
+    $countryNord = $arahasya["COUNTRY"];
+} else {
+    $countryNord = "unknown";
+}
+if (isset($arahasya["CITY"])) {
+    $cityNord = $arahasya["CITY"];
+} else {
+    $cityNord = "unknown";
+}
+if (isset($arahasya["NEW_IP"])) {
+    $ipNord = $arahasya["NEW_IP"];
+} else {
+    $ipNord = "unknown";
+}
+if (isset($arahasya["TRANSFER"])) {
+    $transferNord = $arahasya["TRANSFER"];
+} else {
+    $transferNord = "unknown";
+}
+if (isset($arahasya["UPTIME"])) {
+    $uptimeNord = $arahasya["UPTIME"];
+} else {
+    $uptimeNord = "unknown";
+}
+if (isset($arahasya["PRO_VPN"])) {
+    $proNord = $arahasya["PRO_VPN"];
+    if("$proNord" == "NordLynx"){
+        $proNord="Wireguard";}
+} else {
+    $proNord = "unknown";
+}
 ?>
 
 
@@ -342,7 +392,9 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                             </div>
                         </div>
                     </div>
-</div>
+		</div>
+
+
 	<!-- ######################################################### Server ######################################################### -->
                 <div id="server" class="tab-pane fade<?php if($tab === "server"){ ?> in active<?php } ?>">
 		    <div class="row">
@@ -459,8 +511,76 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                                 </div>
                           </div>
                         </div>
-                </div>
-</div>
+<div class="col-md-6">
+                            <div class="box">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">NordVPN Stauts:</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <table class="table table-striped table-bordered dt-responsive nowrap">
+                                                <tbody>
+							<form role="form" method="post">
+
+                                                    <tr>
+                                                        <th scope="row">Connected to the Internet:</th>
+                                                        <td><?php echo is_connected(); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">VPN Status:</th>
+                                                        <td><?php echo htmlentities($statusNord); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Current Server:</th>
+                                                        <td><?php echo htmlentities($serverNord); ?></td>
+                                                    </tr>
+                                                     <tr>
+                                                        <th scope="row">Country:</th>
+                                                        <td><?php echo htmlentities($countryNord); ?></td>
+                                                    </tr>
+                                                   </tr>
+                                                     <tr>
+                                                        <th scope="row">City:</th>
+                                                        <td><?php echo htmlentities($cityNord); ?></td>
+                                                    </tr> 
+                                                   <tr>
+                                                        <th scope="row">New Public IP:</th>
+                                                        <td><?php echo htmlentities($ipNord); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Protocol:</th>
+                                                        <td><?php echo htmlentities($proNord); ?></td>
+                                                    </tr>
+                                                     <tr>
+                                                        <th scope="row">Data transfer:</th>
+                                                        <td><?php echo htmlentities($transferNord); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Uptime:</th>
+                                                        <td><?php echo htmlentities($uptimeNord); ?></td>
+                                                    </tr>
+
+
+                                                         <input type="hidden" name="field" value="updateNord">
+                                                        <input type="hidden" name="token" value="<?php echo $token ?>">
+
+           					    <tr>
+                                                        <th> </th>
+                                                        <td><button type="submit" class="btn btn-primary pull-right">Update</button></td>
+                                                    </tr>
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+		</div>
+
         <!-- ######################################################### Settings ######################################################### -->
                 <div id="settings" class="tab-pane fade<?php if($tab === "settings"){ ?> in active<?php } ?>">
                     <div class="row">

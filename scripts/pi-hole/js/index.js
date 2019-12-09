@@ -366,77 +366,6 @@ function updateClientsOverTime() {
     });
 }
 
-function updateForwardDestinationsPie() {
-    $.getJSON("api.php?getForwardDestinations", function(data) {
-
-        if("FTLnotrunning" in data)
-        {
-            return;
-        }
-
-        var colors = [];
-        // Get colors from AdminLTE
-        $.each($.AdminLTE.options.colors, function(key, value) { colors.push(value); });
-        var v = [], c = [], k = [], values = [];
-
-        // Collect values and colors
-        $.each(data.forward_destinations, function(key , value) {
-            if(key.indexOf("|") > -1)
-            {
-                key = key.substr(0, key.indexOf("|"));
-            }
-            values.push([key, value, colors.shift()]);
-        });
-
-        // Split data into individual arrays for the graphs
-        $.each(values, function(key , value) {
-            k.push(value[0]);
-            v.push(value[1]);
-            c.push(value[2]);
-        });
-
-        // Build a single dataset with the data to be pushed
-        var dd = {data: v, backgroundColor: c};
-        // and push it at once
-        forwardDestinationPieChart.data.labels = k;
-        forwardDestinationPieChart.data.datasets[0] = dd;
-        // and push it at once
-        $("#forward-destinations-pie .overlay").hide();
-        forwardDestinationPieChart.update();
-        forwardDestinationPieChart.chart.config.options.cutoutPercentage=50;
-        forwardDestinationPieChart.update();
-        // Don't use rotation animation for further updates
-        forwardDestinationPieChart.options.animation.duration=0;
-        // Generate legend in separate div
-        $("#forward-destinations-legend").html(forwardDestinationPieChart.generateLegend());
-        $("#forward-destinations-legend > ul > li").on("mousedown",function(e){
-            if(e.which === 2) // which == 2 is middle mouse button
-            {
-                $(this).toggleClass("strike");
-                var index = $(this).index();
-                var ci = e.view.forwardDestinationPieChart;
-                var meta = ci.data.datasets[0]._meta;
-                for(let i in meta)
-                {
-                    if ({}.hasOwnProperty.call(meta, i))
-                    {
-                        var curr = meta[i].data[index];
-                        curr.hidden = !curr.hidden;
-                    }
-                }
-                ci.update();
-            }
-            else if(e.which === 1) // which == 1 is left mouse button
-            {
-                var obj = encodeURIComponent(e.target.innerText);
-                window.open("queries.php?forwarddest="+obj, "_self");
-            }
-        });
-    }).done(function() {
-        // Reload graph after one minute
-        setTimeout(updateForwardDestinationsPie, 60000);
-    });
-}
 
 // Credit: http://stackoverflow.com/questions/1787322/htmlspecialchars-equivalent-in-javascript/4835406#4835406
 function escapeHtml(text) {
@@ -451,169 +380,6 @@ function escapeHtml(text) {
   return text.replace(/[&<>"']/g, function(m) { return map[m]; });
 }
 
-function updateTopClientsChart() {
-    $.getJSON("api.php?summaryRaw&getQuerySources&topClientsBlocked", function(data) {
-
-        if("FTLnotrunning" in data)
-        {
-            return;
-        }
-
-        // Clear tables before filling them with data
-        $("#client-frequency td").parent().remove();
-        var clienttable = $("#client-frequency").find("tbody:last");
-        var client, percentage, clientname, clientip, idx, url;
-        for (client in data.top_sources) {
-
-            if ({}.hasOwnProperty.call(data.top_sources, client)){
-                // Sanitize client
-                if(escapeHtml(client) !== client)
-                {
-                    // Make a copy with the escaped index if necessary
-                    data.top_sources[escapeHtml(client)] = data.top_sources[client];
-                }
-                client = escapeHtml(client);
-                if(client.indexOf("|") > -1)
-                {
-                    idx = client.indexOf("|");
-                    clientname = client.substr(0, idx);
-                    clientip = client.substr(idx+1, client.length-idx);
-                }
-                else
-                {
-                    clientname = client;
-                    clientip = client;
-                }
-
-                url = "<a href=\"queries.php?client="+clientip+"\" title=\""+clientip+"\">"+clientname+"</a>";
-                percentage = data.top_sources[client] / data.dns_queries_today * 100;
-                clienttable.append("<tr> <td>" + url +
-                    "</td> <td>" + data.top_sources[client] + "</td> <td> <div class=\"progress progress-sm\" title=\""+percentage.toFixed(1)+"% of " + data.dns_queries_today + "\"> <div class=\"progress-bar progress-bar-blue\" style=\"width: " +
-                    percentage + "%\"></div> </div> </td> </tr> ");
-            }
-        }
-
-        // Clear tables before filling them with data
-        $("#client-frequency-blocked td").parent().remove();
-        var clientblockedtable = $("#client-frequency-blocked").find("tbody:last");
-        for (client in data.top_sources_blocked)
-        {
-
-            if ({}.hasOwnProperty.call(data.top_sources_blocked, client)){
-                // Sanitize client
-                if(escapeHtml(client) !== client)
-                {
-                    // Make a copy with the escaped index if necessary
-                    data.top_sources_blocked[escapeHtml(client)] = data.top_sources_blocked[client];
-                }
-                client = escapeHtml(client);
-                if(client.indexOf("|") > -1)
-                {
-                    idx = client.indexOf("|");
-                    clientname = client.substr(0, idx);
-                    clientip = client.substr(idx+1, client.length-idx);
-                }
-                else
-                {
-                    clientname = client;
-                    clientip = client;
-                }
-
-                url = "<a href=\"queries.php?client="+clientip+"\" title=\""+clientip+"\">"+clientname+"</a>";
-                percentage = data.top_sources_blocked[client] / data.ads_blocked_today * 100;
-                clientblockedtable.append("<tr> <td>" + url +
-                    "</td> <td>" + data.top_sources_blocked[client] + "</td> <td> <div class=\"progress progress-sm\" title=\""+percentage.toFixed(1)+"% of " + data.dns_queries_today + "\"> <div class=\"progress-bar progress-bar-blue\" style=\"width: " +
-                    percentage + "%\"></div> </div> </td> </tr> ");
-            }
-        }
-
-        // Remove table if there are no results (e.g. privacy mode enabled)
-        if(jQuery.isEmptyObject(data.top_sources))
-        {
-            $("#client-frequency").parent().remove();
-        }
-
-        // Remove table if there are no results (e.g. privacy mode enabled)
-        if(jQuery.isEmptyObject(data.top_sources_blocked))
-        {
-            $("#client-frequency-blocked").parent().remove();
-        }
-
-        $("#client-frequency .overlay").hide();
-        $("#client-frequency-blocked .overlay").hide();
-        // Update top clients list data every ten seconds
-        setTimeout(updateTopClientsChart, 10000);
-    });
-}
-
-function updateTopLists() {
-    $.getJSON("api.php?summaryRaw&topItems", function(data) {
-
-        if("FTLnotrunning" in data)
-        {
-            return;
-        }
-
-        // Clear tables before filling them with data
-        $("#domain-frequency td").parent().remove();
-        $("#ad-frequency td").parent().remove();
-        var domaintable = $("#domain-frequency").find("tbody:last");
-        var adtable = $("#ad-frequency").find("tbody:last");
-        var url, domain, percentage;
-        for (domain in data.top_queries)
-        {
-            if ({}.hasOwnProperty.call(data.top_queries,domain)){
-                // Sanitize domain
-                if(escapeHtml(domain) !== domain)
-                {
-                    // Make a copy with the escaped index if necessary
-                    data.top_queries[escapeHtml(domain)] = data.top_queries[domain];
-                }
-                domain = escapeHtml(domain);
-                url = "<a href=\"queries.php?domain="+domain+"\">"+domain+"</a>";
-                percentage = data.top_queries[domain] / data.dns_queries_today * 100;
-                domaintable.append("<tr> <td>" + url +
-                    "</td> <td>" + data.top_queries[domain] + "</td> <td> <div class=\"progress progress-sm\" title=\""+percentage.toFixed(1)+"% of " + data.dns_queries_today + "\"> <div class=\"progress-bar progress-bar-green\" style=\"width: " +
-                    percentage + "%\"></div> </div> </td> </tr> ");
-            }
-        }
-
-        // Remove table if there are no results (e.g. privacy mode enabled)
-        if(jQuery.isEmptyObject(data.top_queries))
-        {
-            $("#domain-frequency").parent().remove();
-        }
-
-        for (domain in data.top_ads)
-        {
-            if ({}.hasOwnProperty.call(data.top_ads,domain)){
-                // Sanitize domain
-                if(escapeHtml(domain) !== domain)
-                {
-                    // Make a copy with the escaped index if necessary
-                    data.top_ads[escapeHtml(domain)] = data.top_ads[domain];
-                }
-                domain = escapeHtml(domain);
-                url = "<a href=\"queries.php?domain="+domain+"\">"+domain+"</a>";
-                percentage = data.top_ads[domain] / data.ads_blocked_today * 100;
-                adtable.append("<tr> <td>" + url +
-                    "</td> <td>" + data.top_ads[domain] + "</td> <td> <div class=\"progress progress-sm\" title=\""+percentage.toFixed(1)+"% of " + data.ads_blocked_today + "\"> <div class=\"progress-bar progress-bar-yellow\" style=\"width: " +
-                    percentage + "%\"></div> </div> </td> </tr> ");
-            }
-        }
-
-        // Remove table if there are no results (e.g. privacy mode enabled)
-        if(jQuery.isEmptyObject(data.top_ads))
-        {
-            $("#ad-frequency").parent().remove();
-        }
-
-        $("#domain-frequency .overlay").hide();
-        $("#ad-frequency .overlay").hide();
-        // Update top lists data every 10 seconds
-        setTimeout(updateTopLists, 10000);
-    });
-}
 
 var FTLoffline = false;
 function updateSummaryData(runOnce) {
@@ -713,98 +479,6 @@ $(document).ready(function() {
 
     updateSummaryData();
 
-    var ctx = document.getElementById("queryOverTimeChart").getContext("2d");
-    timeLineChart = new Chart(ctx, {
-        type: "line",
-        data: {
-            labels: [],
-            datasets: [
-                {
-                    label: "Total DNS Queries",
-                    fill: true,
-                    backgroundColor: "rgba(220,220,220,0.5)",
-                    borderColor: "rgba(0, 166, 90,.8)",
-                    pointBorderColor: "rgba(0, 166, 90,.8)",
-                    pointRadius: 1,
-                    pointHoverRadius: 5,
-                    data: [],
-                    pointHitRadius: 5,
-                    cubicInterpolationMode: "monotone"
-                },
-                {
-                    label: "Blocked DNS Queries",
-                    fill: true,
-                    backgroundColor: "rgba(0,192,239,0.5)",
-                    borderColor: "rgba(0,192,239,1)",
-                    pointBorderColor: "rgba(0,192,239,1)",
-                    pointRadius: 1,
-                    pointHoverRadius: 5,
-                    data: [],
-                    pointHitRadius: 5,
-                    cubicInterpolationMode: "monotone"
-                }
-            ]
-        },
-        options: {
-            tooltips: {
-                enabled: true,
-                mode: "x-axis",
-                callbacks: {
-                    title: function(tooltipItem, data) {
-                        var label = tooltipItem[0].xLabel;
-                        var time = label.match(/(\d?\d):?(\d?\d?)/);
-                        var h = parseInt(time[1], 10);
-                        var m = parseInt(time[2], 10) || 0;
-                        var from = padNumber(h)+":"+padNumber(m-5)+":00";
-                        var to = padNumber(h)+":"+padNumber(m+4)+":59";
-                        return "Upstreams from "+from+" to "+to;
-                    },
-                    label: function(tooltipItems, data) {
-                        if(tooltipItems.datasetIndex === 1)
-                        {
-                            var percentage = 0.0;
-                            var total = parseInt(data.datasets[0].data[tooltipItems.index]);
-                            var blocked = parseInt(data.datasets[1].data[tooltipItems.index]);
-                            if(total > 0)
-                            {
-                                percentage = 100.0*blocked/total;
-                            }
-                            return data.datasets[tooltipItems.datasetIndex].label + ": " + tooltipItems.yLabel + " (" + percentage.toFixed(1) + "%)";
-                        }
-                        else
-                        {
-                            return data.datasets[tooltipItems.datasetIndex].label + ": " + tooltipItems.yLabel;
-                        }
-                    }
-                }
-            },
-            legend: {
-                display: false
-            },
-            scales: {
-                xAxes: [{
-                    type: "time",
-                    time: {
-                        unit: "hour",
-                        displayFormats: {
-                            hour: "HH:mm"
-                        },
-                        tooltipFormat: "HH:mm"
-                    }
-                }],
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            },
-            maintainAspectRatio: false
-        }
-    });
-
-    // Pull in data via AJAX
-
-    updateQueriesOverTime();
 
     // Create / load "Forward Destinations over Time" only if authorized
     if(document.getElementById("forwardDestinationChart"))
@@ -1349,6 +1023,14 @@ $(document).ready(function(){
     }
 });
 
+$(document).ready(function(){
+    var alError = $("#alError");
+    if(alError.length)
+    {
+        alError.delay(10000).fadeOut(2000, function() { alError.hide(); });
+    }
+});
+
 
 var $select1 = $( '#select1' ),
 		$select2 = $( '#select2' ),
@@ -1365,3 +1047,4 @@ var $select3 = $( '#select3' ),
 $select3.on( 'change', function() {
  $select4.html( $options1.filter( '[value^="' + (this.value).split("|")[0] + '"]' ) );
 } ).trigger( 'change' );
+

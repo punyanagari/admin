@@ -46,7 +46,6 @@ input:checked + .slider:before {
   transform: translateX(13px);
 }
 
-/* Rounded sliders */
 .slider.round {
   border-radius: 17px;
 }
@@ -54,3 +53,4 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+

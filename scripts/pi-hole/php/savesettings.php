@@ -273,7 +273,7 @@ function readAdlists()
 
                                 break;
 
-				 case "changeNord":
+			case "changeNord":
                                         $nordpass = $_POST["nordpass"];
                                         $nordmail = $_POST["nordmail"];
                                         if("$nordmail" != "" && "$nordpass" != ""){
@@ -286,6 +286,11 @@ function readAdlists()
                                                 $error .= "Details cannot be blank!";
                                         }
 
+                                break;
+
+			case "updateNord":
+					exec("sudo pihole -a updateNord");
+					$success .= "Status updated...";
                                 break;
 
                         case "changeDefault":

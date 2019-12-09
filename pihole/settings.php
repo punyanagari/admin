@@ -232,7 +232,7 @@ if (isset($setupVars["API_PRIVACY_MODE"])) {
 ?>
 
 <?php
-if (isset($_GET['tab']) && in_array($_GET['tab'], array("sysadmin", "blocklists", "dns", "piholedhcp", "api", "privacy", "teleporter","changepassword"))) {
+if (isset($_GET['tab']) && in_array($_GET['tab'], array("sysadmin", "blocklists", "dns", "piholedhcp", "api", "privacy", "teleporter"))) {
     $tab = $_GET['tab'];
 } else {
     $tab = "sysadmin";
@@ -249,7 +249,6 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("sysadmin", "blocklists"
                 <li<?php if($tab === "api"){ ?> class="active"<?php } ?>><a data-toggle="tab" href="#api">API / Web interface</a></li>
                 <li<?php if($tab === "privacy"){ ?> class="active"<?php } ?>><a data-toggle="tab" href="#privacy">Privacy</a></li>
                 <li<?php if($tab === "teleporter"){ ?> class="active"<?php } ?>><a data-toggle="tab" href="#teleporter">Teleporter</a></li>
-                <li<?php if($tab === "changepassword"){ ?> class="active"<?php } ?>><a data-toggle="tab" href="#changepassword">Change Password</a></li>
             </ul>
             <div class="tab-content">
                 <!-- ######################################################### Blocklists ######################################################### -->
