@@ -289,7 +289,7 @@ function readAdlists()
                                 break;
 
 			case "updateNord":
-					exec("sudo pihole -a updateNord");
+					exec("sudo pihole -a updatenord");
 					$success .= "Status updated...";
                                 break;
 

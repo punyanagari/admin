@@ -12,7 +12,7 @@
 
    $setupVars = parse_ini_file("/etc/pihole/setupVars.conf");
    $arahasya = parse_ini_file("/opt/pihole/arahasya/arahasya.conf");
-
+   $nord = parse_ini_file("/opt/pihole/arahasya/nord.conf");
 
    if(is_readable($piholeFTLConfFile))
    {
@@ -158,43 +158,43 @@ if (isset($setupVars["BLOCKING_ENABLED"])) {
     $pihole = "unknown";
 }
 
-if (isset($arahasya["STATUS"])) {
-    $statusNord = $arahasya["STATUS"];
+if (isset($nord["STATUS"])) {
+    $statusNord = $nord["STATUS"];
 } else {
     $statusNord = "unknown";
 }
-if (isset($arahasya["SERVER"])) {
-    $serverNord = $arahasya["SERVER"];
+if (isset($nord["SERVER"])) {
+    $serverNord = $nord["SERVER"];
 } else {
     $serverNord = "unknown";
 }
-if (isset($arahasya["COUNTRY"])) {
-    $countryNord = $arahasya["COUNTRY"];
+if (isset($nord["COUNTRY"])) {
+    $countryNord = $nord["COUNTRY"];
 } else {
     $countryNord = "unknown";
 }
-if (isset($arahasya["CITY"])) {
-    $cityNord = $arahasya["CITY"];
+if (isset($nord["CITY"])) {
+    $cityNord = $nord["CITY"];
 } else {
     $cityNord = "unknown";
 }
-if (isset($arahasya["NEW_IP"])) {
-    $ipNord = $arahasya["NEW_IP"];
+if (isset($nord["NEW_IP"])) {
+    $ipNord = $nord["NEW_IP"];
 } else {
     $ipNord = "unknown";
 }
-if (isset($arahasya["TRANSFER"])) {
-    $transferNord = $arahasya["TRANSFER"];
+if (isset($nord["TRANSFER"])) {
+    $transferNord = $nord["TRANSFER"];
 } else {
     $transferNord = "unknown";
 }
-if (isset($arahasya["UPTIME"])) {
-    $uptimeNord = $arahasya["UPTIME"];
+if (isset($nord["UPTIME"])) {
+    $uptimeNord = $nord["UPTIME"];
 } else {
     $uptimeNord = "unknown";
 }
-if (isset($arahasya["PRO_VPN"])) {
-    $proNord = $arahasya["PRO_VPN"];
+if (isset($nord["PRO_VPN"])) {
+    $proNord = $nord["PRO_VPN"];
     if("$proNord" == "NordLynx"){
         $proNord="Wireguard";}
 } else {
@@ -485,8 +485,7 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                                                                 <option value="1|vn|Vietnam">Vietnam</option>
 								<option value="2" selected disabled>Select Country</option>
                                                                 <option value="2|au|Australia">Australia</option>
-								<option value="2|at|Austria">Austria</option>
-                                                                <option value="2|ca|Canada">Canada</option>
+								<option value="2|ca|Canada">Canada</option>
                                                                 <option value="2|fr|France">France</option>
                                                                 <option value="2|de|Germany">Germany</option>
                                                                 <option value="2|sg|Singapore">Singapore</option>
@@ -495,6 +494,7 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                                                                 <option value="2|us|United States">United States</option>
 								<option value="2|nl|Netherlands">Netherlands</option>
                                                                 <option value="2|jp|Japan">Japan</option>
+								<option value="2|at|Austria">Austria</option>
                                                                 </select>
                                                         </div>
                                                     </td>
@@ -783,10 +783,9 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
         </div>
     </div>
 </div>
-
+<?php } ?>
 <script src="scripts/vendor/jquery.confirm.min.js"></script>
 <script src="scripts/pi-hole/js/index.js"></script>
-<?php } ?>
 
 
 

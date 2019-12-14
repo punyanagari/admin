@@ -71,14 +71,6 @@ if (isset($_POST["submit"])) {
 
 
 <?php
-
-if (isset($setupVars["WEBPASSWORD"])) {
-    $currenthash = $setupVars["WEBPASSWORD"];
-} else {
-    $currenthash = "unknown";
-}
-
-
 // Networking
 if (isset($setupVars["PIHOLE_INTERFACE"])) {
     $piHoleInterface = $setupVars["PIHOLE_INTERFACE"];
