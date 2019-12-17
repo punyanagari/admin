@@ -99,7 +99,6 @@ function is_connected()
         $is_conn = "No"; //action in connection failure
     }
     return $is_conn;
-
 }
 ?>
 
@@ -202,7 +201,12 @@ if (isset($nord["PRO_VPN"])) {
 }
 ?>
 
-
+<?php
+  // If the user is logged in, then we show the more detailed index page.
+  // Even if we would include them here anyhow, there would be nothing to
+  // show since the API will respect the privacy of the user if he defines
+  // a password
+  if(!$auth){ ?>
 <!-- Small boxes (Stat box) -->
 <div class="row">
     <div class="col-lg-3 col-sm-6">
@@ -258,6 +262,77 @@ if (isset($nord["PRO_VPN"])) {
     </div>
     <!-- ./col -->
 </div>
+<div class="row">
+<div class="col-md-6">
+                            <div class="box">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">NordVPN Stauts:</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <table class="table table-striped table-bordered dt-responsive nowrap">
+                                                <tbody>
+                                                        <form role="form" method="post">
+
+                                                    <tr>
+                                                        <th scope="row">Connected to the Internet:</th>
+                                                        <td><?php echo is_connected(); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">VPN Status:</th>
+                                                        <td><?php echo htmlentities($statusNord); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Current Server:</th>
+                                                        <td><?php echo htmlentities($serverNord); ?></td>
+                                                    </tr>
+                                                     <tr>
+                                                        <th scope="row">Country:</th>
+                                                        <td><?php echo htmlentities($countryNord); ?></td>
+                                                    </tr>
+                                                   </tr>
+                                                     <tr>
+                                                        <th scope="row">City:</th>
+                                                        <td><?php echo htmlentities($cityNord); ?></td>
+                                                    </tr> 
+                                                   <tr>
+						   <th scope="row">New Public IP:</th>
+                                                        <td><?php echo htmlentities($ipNord); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Protocol:</th>
+                                                        <td><?php echo htmlentities($proNord); ?></td>
+                                                    </tr>
+                                                     <tr>
+                                                        <th scope="row">Data transfer:</th>
+                                                        <td><?php echo htmlentities($transferNord); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Uptime:</th>
+                                                        <td><?php echo htmlentities($uptimeNord); ?></td>
+                                                    </tr>
+
+
+                                                         <input type="hidden" name="field" value="updateNord">
+                                                        <input type="hidden" name="token" value="<?php echo $token ?>">
+
+                                                    <tr>
+                                                        <th> </th>
+                                                        <td><button type="submit" class="btn btn-primary pull-right">Update</button></td>
+                                                    </tr>
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+<?php } ?>
 
 <?php
   // If the user is logged in, then we show the more detailed index page.
@@ -265,6 +340,63 @@ if (isset($nord["PRO_VPN"])) {
   // show since the API will respect the privacy of the user if he defines
   // a password
   if($auth){ ?>
+
+<div class="row">
+    <div class="col-lg-3 col-sm-6">
+        <!-- small box -->
+        <div class="small-box bg-green" id="total_queries" title="only A + AAAA queries">
+            <div class="inner">
+                <p>Total queries (<span id="unique_clients">-</span> clients)</p>
+                <h3 class="statistic"><span id="dns_queries_today">---</span></h3>
+            </div>
+            <div class="icon">
+                <i class="ion ion-earth"></i>
+            </div>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-sm-6">
+        <!-- small box -->
+        <div class="small-box bg-aqua">
+            <div class="inner">
+                <p>Queries Blocked</p>
+                <h3 class="statistic"><span id="ads_blocked_today">---</span></h3>
+            </div>
+            <div class="icon">
+                <i class="ion ion-android-hand"></i>
+            </div>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-sm-6">
+        <!-- small box -->
+        <div class="small-box bg-yellow">
+            <div class="inner">
+                <p>Percent Blocked</p>
+                <h3 class="statistic"><span id="ads_percentage_today">---</span></h3>
+            </div>
+            <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+            </div>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-sm-6">
+        <!-- small box -->
+        <div class="small-box bg-red" title="<?php echo gravity_last_update(); ?>">
+            <div class="inner">
+                <p>Domains on Blocklist</p>
+                <h3 class="statistic"><span id="domains_being_blocked">---</span></h3>
+            </div>
+            <div class="icon">
+                <i class="ion ion-ios-list"></i>
+            </div>
+        </div>
+    </div>
+    <!-- ./col -->
+</div>
+
+
 
 <?php
 if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "changedetails"))) {
@@ -485,6 +617,7 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                                                                 <option value="1|vn|Vietnam">Vietnam</option>
 								<option value="2" selected disabled>Select Country</option>
                                                                 <option value="2|au|Australia">Australia</option>
+								<option value="2|at|Austria">Austria</option>
 								<option value="2|ca|Canada">Canada</option>
                                                                 <option value="2|fr|France">France</option>
                                                                 <option value="2|de|Germany">Germany</option>
@@ -494,23 +627,25 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                                                                 <option value="2|us|United States">United States</option>
 								<option value="2|nl|Netherlands">Netherlands</option>
                                                                 <option value="2|jp|Japan">Japan</option>
-								<option value="2|at|Austria">Austria</option>
                                                                 </select>
                                                         </div>
                                                     </td>
                                                 </tr>
                                                                 <input type="hidden" name="token" value="<?php echo $token ?>">
 
-						<tr><th><td>
+						<tr><th>
+<button type="submit" class="btn btn-danger" name="field" value="disConnect">Disconnect</button>
+<td>
 							<button type="submit" class="btn btn-primary pull-right" name="field" value="changeServer">Connect</button>
-						</td></th></tr></form>
+						</td></th></tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
                           </div>
-                        </div>
+				<p>Connect to the Fastest server: </p><button type="submit" class="btn btn-primary" name="field" value="quickConnect">Quick Connect</button>
+                        </div></form>
 <div class="col-md-6">
                             <div class="box">
                                 <div class="box-header with-border">
@@ -701,12 +836,12 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                                                                 <option value="1|vn|Vietnam">Vietnam</option>
 								<option value="2" selected disabled>Select Country</option>
                                                                 <option value="2|au|Australia">Australia</option>
-								<option value="2|at|Austria">Australia</option>
+								<option value="2|at|Austria">Austria</option>
                                                                 <option value="2|ca|Canada">Canada</option>
                                                                 <option value="2|fr|France">France</option>
                                                                 <option value="2|de|Germany">Germany</option>
                                                                 <option value="2|sg|Singapore">Singapore</option>
-								<option value="2|hk|Hong Kong">Japan</option>
+								<option value="2|hk|Hong Kong">Hong Kong</option>
 								<option value="2|uk|United Kingdom">United Kingdom</option>
                                                                 <option value="2|us|United Stauts">United States</option>
 								<option value="2|nl|Netherlands">Netherlands</option>

@@ -318,6 +318,15 @@ function readAdlists()
                                         $error .= "Please select the protocol and the country...";
                                 }
                                 break;
+			case "quickConnect":
+				exec("sudo pihole -a quickconnect");
+                                $success .= "Connecting to the Fastest server...";
+                                break;
+
+                        case "disConnect":
+				exec("sudo pihole -a disconnect");
+                                $success .= "Disconnecting NordVPN connection...";
+                                break;
 
 			default:
 				// Option not found
