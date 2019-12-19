@@ -13,7 +13,7 @@
    $setupVars = parse_ini_file("/etc/pihole/setupVars.conf");
    $arahasya = parse_ini_file("/opt/pihole/arahasya/arahasya.conf");
    $nord = parse_ini_file("/opt/pihole/arahasya/nord.conf");
-
+   $hostapd = parse_ini_file("/etc/hostapd/hostapd.conf");
    if(is_readable($piholeFTLConfFile))
    {
         $piholeFTLConf = parse_ini_file($piholeFTLConfFile);
@@ -106,6 +106,16 @@ function is_connected()
 
 //arahasya
 
+if (isset($setupVars["BLOCKING_ENABLED"])) {
+    $pihole = $setupVars["BLOCKING_ENABLED"];
+    if($pihole){
+        $piholeStatus="Enabled";
+    }else{
+        $piholeStatus="Disabled";
+    }
+} else {
+    $pihole = "unknown";
+}
 if (isset($setupVars["WEBPASSWORD"])) {
     $currenthash = $setupVars["WEBPASSWORD"];
 } else {
@@ -146,16 +156,18 @@ if (isset($arahasya["DNS_CRYPT"])) {
 } else {
     $dnsCrypt = "unknown";
 }
-if (isset($setupVars["BLOCKING_ENABLED"])) {
-    $pihole = $setupVars["BLOCKING_ENABLED"];
-    if($pihole){
-        $piholeStatus="Enabled";
-    }else{
-        $piholeStatus="Disabled";
-    }
+if (isset($hostapd["ssid"])) {
+    $wifiname = $hostapd["ssid"];
 } else {
-    $pihole = "unknown";
+    $wifiname = "unknown";
 }
+if (isset($hostapd["wpa_passphrase"])) {
+    $wifipassword = $hostapd["wpa_passphrase"];
+} else {
+    $wifipassword = "unknown";
+}
+
+
 
 if (isset($nord["STATUS"])) {
     $statusNord = $nord["STATUS"];
@@ -503,7 +515,7 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                                                         <td>
                                                              <div class="form-group">
                                                                 <div class="input-group">
-                                                                        <input type="password" class="form-control" name="confirm"
+                                                                        <input type="text" class="form-control" name="confirm"
                                                                         value="<?php echo $confirm; ?>">
                                                                 </div>
                                                            </div>
@@ -511,6 +523,53 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                                                     </tr>
                                                          <input type="hidden" name="currenthash" value="<?php echo $currenthash ?>">
                                                          <input type="hidden" name="field" value="changePassword">
+                                                        <input type="hidden" name="token" value="<?php echo $token ?>">
+
+                                                <tr><td><td>
+                                                        <button type="submit" class="btn btn-primary pull-right">Save</button>
+                                                </td></td></tr></form>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+			<div class="col-md-6">
+                            <div class="box">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Change Wifi Hotspot Name/Password:</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <table class="table table-striped table-bordered dt-responsive nowrap">
+                                                <tbody>
+							<form role="form" method="post">
+
+                                                    <tr>
+                                                        <th scope="row">Wifi Name:</th>
+                                                        <td>
+                                                           <div class="form-group">
+                                                                <div class="input-group">
+                                                                        <input type="text" class="form-control" name="wifiname"
+                                                                        value="<?php echo $wifiname; ?>">
+                                                                </div>
+                                                           </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Wifi Password:</th>
+                                                        <td>
+                                                           <div class="form-group">
+                                                                <div class="input-group">
+                                                                        <input type="text" class="form-control" name="wifipassword"
+                                                                        value="<?php echo $wifipassword; ?>">
+                                                                </div>
+                                                           </div>
+                                                        </td>
+                                                    </tr>
+                                                         <input type="hidden" name="field" value="changeWifi">
                                                         <input type="hidden" name="token" value="<?php echo $token ?>">
 
                                                 <tr><td><td>

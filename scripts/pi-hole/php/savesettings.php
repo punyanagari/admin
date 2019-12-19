@@ -328,6 +328,12 @@ function readAdlists()
                                 $success .= "Disconnecting NordVPN connection...";
                                 break;
 
+			case "changeWifi":
+				$wifiname = $_POST["wifiname"];
+                                $wifipassword = $_POST["wifipassword"];
+                                exec("sudo pihole -a changewifidetails \"".$wifiname."\" ".$wifipassword);
+                                $success .= "Changed Wifi Details succesfully. Reboot to enable changes!";
+                                break;
 			default:
 				// Option not found
 				$debug = true;
