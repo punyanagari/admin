@@ -156,6 +156,13 @@ if (isset($arahasya["DNS_CRYPT"])) {
 } else {
     $dnsCrypt = "unknown";
 }
+if (isset($arahasya["NORD_MAIL"])) {
+    $mailNord = $arahasya["NORD_MAIL"];
+} else {
+    $mailNord = "unknown";
+}
+
+
 if (isset($hostapd["ssid"])) {
     $wifiname = $hostapd["ssid"];
 } else {
@@ -285,11 +292,15 @@ if (isset($nord["PRO_VPN"])) {
                                         <div class="col-lg-12">
                                             <table class="table table-striped table-bordered dt-responsive nowrap">
                                                 <tbody>
-                                                        <form role="form" method="post">
+                                                        <form role="form" method="post" name="nordform">
 
                                                     <tr>
                                                         <th scope="row">Connected to the Internet:</th>
                                                         <td><?php echo is_connected(); ?></td>
+                                                    </tr>
+						    <tr>
+                                                        <th scope="row">NordVPN E-mail:</th>
+                                                        <td><?php echo htmlentities($mailNord); ?></td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">VPN Status:</th>
@@ -332,7 +343,7 @@ if (isset($nord["PRO_VPN"])) {
                                                     <tr>
                                                         <th> </th>
                                                         <td><button type="submit" class="btn btn-primary pull-right">Update</button></td>
-                                                    </tr>
+                                                    </tr></form>
 
 
                                                 </tbody>
@@ -459,6 +470,17 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                                                                 <div class="input-group">
                                                                         <input type="password" class="form-control" name="nordpass"
                                                                         value="<?php echo $nordpass; ?>">
+                                                                </div>
+                                                           </div>
+                                                        </td>
+                                                    </tr>
+						    <tr>
+                                                        <th scope="row">Confirm Password:</th>
+                                                        <td>
+                                                             <div class="form-group">
+                                                                <div class="input-group">
+                                                                        <input type="text" class="form-control" name="nordconfirm"
+                                                                        value="<?php echo $confirm; ?>">
                                                                 </div>
                                                            </div>
                                                         </td>
@@ -720,6 +742,10 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("server", "settings", "c
                                                     <tr>
                                                         <th scope="row">Connected to the Internet:</th>
                                                         <td><?php echo is_connected(); ?></td>
+                                                    </tr>
+						     <tr>
+                                                        <th scope="row">NordVPN E-mail:</th>
+                                                        <td><?php echo htmlentities($mailNord); ?></td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">VPN Status:</th>

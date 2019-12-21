@@ -816,8 +816,8 @@ $(".confirm-vpnmode").confirm({
         confirmButton: "Yes",
         cancelButton: "No, go back",
         post: true,
-        confirmButtonClass: "btn-danger",
-        cancelButtonClass: "btn-success",
+        confirmButtonClass: "btn-success",
+        cancelButtonClass: "btn-danger",
         dialogClass: "modal-dialog modal-mg" // Bootstrap classes for mid-size modal
 });
 
@@ -833,8 +833,8 @@ $(".confirm-dns").confirm({
         confirmButton: "Yes",
         cancelButton: "No, go back",
         post: true,
-        confirmButtonClass: "btn-danger",
-        cancelButtonClass: "btn-success",
+	confirmButtonClass: "btn-success",
+        cancelButtonClass: "btn-danger",
         dialogClass: "modal-dialog modal-mg" // Bootstrap classes for mid-size modal
 });
 
@@ -850,8 +850,8 @@ $(".confirm-pihole").confirm({
         confirmButton: "Yes",
         cancelButton: "No, go back",
         post: true,
-        confirmButtonClass: "btn-danger",
-        cancelButtonClass: "btn-success",
+	confirmButtonClass: "btn-success",
+        cancelButtonClass: "btn-danger",
         dialogClass: "modal-dialog modal-mg"
 });
 
