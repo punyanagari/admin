@@ -11,8 +11,8 @@
     <div class="panel-heading">
       <div style="text-align: center;"><img src="img/logo.svg" width="<?php if ($boxedlayout) { ?>50%<?php } else { ?>30%<?php } ?>"></div><br>
 
-        <div class="panel-title text-center"><span class="logo-lg" style="font-size: 25px;">Pi-<b>hole</b></span></div>
-      <p class="login-box-msg">Sign in to start your session</p>
+        <div class="panel-title text-center"><span class="logo-lg" style="font-size: 25px;">J<b>atayu</b></span></div>
+      <p class="login-box-msg">Sign in to access the dashboard.</p>
       <div id="cookieInfo" class="panel-title text-center" style="color:#F00; font-size: 150%" hidden>Verify that cookies are allowed for <samp><?php echo $_SERVER['HTTP_HOST']; ?></samp></div>
       <?php if ($wrongpassword) { ?>
         <div class="form-group has-error login-box-msg">

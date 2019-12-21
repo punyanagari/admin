@@ -813,6 +813,7 @@ $(".confirm-vpnmode").confirm({
         cancel(button) {
                 // nothing to do
         },
+	cancelButton: "No, go back",
         confirmButton: "Yes",
         cancelButton: "No, go back",
         post: true,
@@ -873,7 +874,7 @@ $(".confirm-poweroff").confirm({
 	dialogClass: "modal-dialog modal-mg" // Bootstrap classes for mid-size modal
 });
 $(".confirm-reboot").confirm({
-	text: "Are you sure you want to send a reboot command to your Pi-Hole?",
+	text: "Are you sure you want to send a reboot command?",
 	title: "Confirmation required",
 	confirm(button) {
 		$("#rebootform").submit();

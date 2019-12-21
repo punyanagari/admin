@@ -189,7 +189,7 @@
     <meta http-equiv="cache-control" content="max-age=60,private">
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="img/logo.svg" type="image/x-icon" />
     <meta name="theme-color" content="#367fa9">
     <link rel="apple-touch-icon" sizes="180x180" href="img/favicon.png">
     <link rel="icon" type="image/png" sizes="192x192"  href="img/logo.svg">
@@ -246,9 +246,9 @@ if($auth) {
 <div class="wrapper">
     <header class="main-header">
         <!-- Logo -->
-        <a href="http://pi-hole.net" class="logo" target="_blank">
+        <a href="https://arahasya.com" class="logo" target="_blank">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini">P<b>h</b></span>
+            <span class="logo-mini">J<b>atayu</b></span>
             <!-- logo for regular state and mobile devices -->
             <span class="logo-lg">J<b>atayu</b></span>
         </a>
