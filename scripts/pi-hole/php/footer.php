@@ -61,7 +61,7 @@
             if(isset($FTL_commit)) { echo " (".$FTL_branch.", ".$FTL_commit.")"; }
             if($FTL_update){ ?> <a class="alert-link lookatme" href="https://github.com/pi-hole/FTL/releases" target="_blank">(Update available!)</a><?php } ?>
         </div>
-      <div style="display: inline-block"><strong><a href="https://www.arahasya.com" target="_blank"><i class="fa fa-heart"></i> Arahasya </a></strong>by & Partronics eBoards</div>
+      <div style="display: inline-block"><strong><a href="https://www.arahasya.com" target="_blank"><i class="fa fa-heart"></i> Arahasya </a></strong>by & Partronics eBoards private limited</div>
     </footer>
 </div>
 <!-- ./wrapper -->
